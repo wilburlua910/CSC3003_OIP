@@ -1,0 +1,4 @@
+0 clean_dry_plunger
+1 clean_dry_tube
+2 dirty_wet_plunger
+3 dirty_wet_tube
