@@ -1,5 +1,6 @@
 import RPi.GPIO as GPIO 
 from time import sleep, time
+
 GPIO.setmode(GPIO.BCM)  
 
 #Set up GPIO pins
@@ -20,6 +21,8 @@ def cleaning_done():
          if (GPIO.Input(20) == GPIO.HIGH):
              
              #Function to call inspection
+             
+
              pass
 
 def start_cleaning():
@@ -37,7 +40,5 @@ def stop_cleaning():
     time.sleep(1)
 
     #Reset GUI to first screen
-        
-
-
+    
 
