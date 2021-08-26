@@ -29,7 +29,8 @@ def get_pin_level(pin: int) -> int:
     return GPIO.input(pin)
 
 def move_stepper_motor(motor: list, distance_cm: float):
-    RpiMotorLib.BYJMotor().motor_run(motor, (distance_cm * constants.HALF_STEPS_TO_1CM))
+    pass
+    #RpiMotorLib.BYJMotor().motor_run(motor, (distance_cm * constants.HALF_STEPS_TO_1CM))
 
 # Higher level control
 turn_on_ringlight = set_pin_high(constants.LEDPIN)

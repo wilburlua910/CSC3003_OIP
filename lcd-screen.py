@@ -58,14 +58,22 @@ def goto_inspecting_screen():
     cleaning_screen_box.hide()
     inspecting_screen_box.show()
 
+    print('Im in inspection block')
+
     # #TODO - Camera stuff
-    # with futures.ThreadPoolExecutor() as executor:
-    #     future_obj = executor.submit(camera.run_inference(
-    #         labels= labels,
-    #         interpreter= interpreter,
-    #         size = size 
-    #     ))
-    # future_obj.add_done_callback(inference_cb)
+    with futures.ThreadPoolExecutor(max_workers=1) as executor:
+        future_obj = executor.submit(camera.run_inference(
+            labels= labels,
+            interpreter= interpreter,
+            size = size 
+        ))
+    future_obj.add_done_callback(inference_cb)
+
+def inference_cb(future):
+    future.result()
+    # print(future.done())
+    # print(future)
+
 
 def goto_complete_good_screen():
     inspecting_screen_box.hide()
@@ -74,7 +82,6 @@ def goto_complete_good_screen():
 # poll based listeners
 def cleaning_done():
     if cleaning_screen_box.visible:
-
         #TODO - Check if Arduino pin is HIGH 
         goto_inspecting_screen()
 
@@ -99,11 +106,6 @@ app.bg = "black"
 app.text_color = "black"
 app.set_full_screen()
 
-
-def inference_cb(future_obj):
-
-    #Print 1 or 2
-    print("State of cleaning: " + future_obj.results) 
 
 
 # Start screen

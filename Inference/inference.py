@@ -111,10 +111,10 @@ class Camera:
                         #Change the state
                     
                         gpiocontrol.return_to_rest()
-                        return State.STATE_UNCLEAN
+                        return "UNCLEAN"
 
         gpiocontrol.return_to_rest()
-        return State.STATE_ALL_CLEAN
+        return "ALL CLEAN"
 
     def load_labels(self, path):
         with open(path, 'r', encoding= 'utf-8') as f:
