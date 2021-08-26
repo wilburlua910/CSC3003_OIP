@@ -1,15 +1,26 @@
 #!/usr/bin/env python3
 
+from PIL.Image import init
+from Models.Inference.inference import Camera
 import os
 import threading
+import concurrent.futures as futures
 import queue
 import time
 from enum import Enum
 from guizero import App, Text, PushButton, Box
 
+
+#Custom imports 
+from Inference import inference
+import gpiocontrol
+
+
 positive_green = "#6eff56"
 negative_red = "#ff3333"
 confused_yellow = "#fcff56"
+
+size, interpreter, labels = None, None, None
 
 # App stuff
 os.environ["DISPLAY"] = ":0.0"
@@ -48,6 +59,7 @@ def goto_inspecting_screen():
     inspecting_screen_box.show()
 
     #TODO - Camera stuff
+    
 
 def goto_complete_good_screen():
     inspecting_screen_box.hide()
@@ -65,11 +77,38 @@ def inspecting_done():
     #TODO - check boolean input from camera 
     #Check if -> good ? 1 , bad? 2, not done yet ? 0
 
+def initialize_camera():
+    cam = Camera()
+    time.sleep(1)
+   
+    return cam
+
+#Camera 
+camera = initialize_camera()
+size, interpreter, labels = camera.size, camera.interpreter, camera.labels
+
 # Create app object
 app = App(title="SyClone")
 app.bg = "black"
 app.text_color = "black"
 app.set_full_screen()
+
+
+def inference_cb():
+
+    
+    pass
+    #
+
+with futures.ThreadPoolExecutor() as executor:
+
+    future_obj = executor.submit(camera.run_inference(
+        labels= labels,
+        interpreter= interpreter,
+        size = size 
+    ))
+
+    future_obj.add_done_callback(inference_cb)
 
 # Start screen
 start_screen_box = Box(app, visible=True, width="fill", height="fill")

@@ -17,6 +17,9 @@ from PIL import Image
 #For the states
 from enum import Enum
 
+#Custom import 
+import gpiocontrol
+
 EDGETPU_SHARED_LIB = {
   'Linux': 'libedgetpu.so.1',
   'Darwin': 'libedgetpu.1.dylib',
@@ -77,8 +80,7 @@ class Camera:
         return image_cropped_resized
 
     def run_inference(self, interpreter, size, labels):
-    
-        # TODO get the interpreter to read the image
+
         image_ = Camera.take_photo(size)
         classify.set_input(interpreter= interpreter, data=image_)
 
