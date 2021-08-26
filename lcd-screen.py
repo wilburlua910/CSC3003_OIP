@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from PIL.Image import init
-from Models.Inference.inference import Camera
+from Inference.inference import Camera
 import os
 import threading
 import concurrent.futures as futures
@@ -58,8 +58,14 @@ def goto_inspecting_screen():
     cleaning_screen_box.hide()
     inspecting_screen_box.show()
 
-    #TODO - Camera stuff
-    
+    # #TODO - Camera stuff
+    # with futures.ThreadPoolExecutor() as executor:
+    #     future_obj = executor.submit(camera.run_inference(
+    #         labels= labels,
+    #         interpreter= interpreter,
+    #         size = size 
+    #     ))
+    # future_obj.add_done_callback(inference_cb)
 
 def goto_complete_good_screen():
     inspecting_screen_box.hide()
@@ -99,15 +105,6 @@ def inference_cb(future_obj):
     #Print 1 or 2
     print("State of cleaning: " + future_obj.results) 
 
-with futures.ThreadPoolExecutor() as executor:
-
-    future_obj = executor.submit(camera.run_inference(
-        labels= labels,
-        interpreter= interpreter,
-        size = size 
-    ))
-
-    future_obj.add_done_callback(inference_cb)
 
 # Start screen
 start_screen_box = Box(app, visible=True, width="fill", height="fill")

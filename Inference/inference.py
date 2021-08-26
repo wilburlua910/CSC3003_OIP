@@ -3,7 +3,7 @@ import time
 
 
 #Added tflite dependencies
-import classify 
+from Inference import classify 
 import tflite_runtime.interpreter as tflite
 import platform 
 
@@ -45,9 +45,9 @@ class Camera:
     image_input = None
 
     #File paths
-    labels_file = "syringe_labels.txt"
+    labels_file = "Inference/syringe_labels.txt"
     path_to_labels = os.path.join(os.getcwd(),  labels_file)
-    path_to_model = "model_edgetpu.tflite"
+    path_to_model = "Inference/model_edgetpu.tflite"
 
     def __init__(self):
 

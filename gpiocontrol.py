@@ -10,11 +10,11 @@ def setup():
 
 def setup_output_pin(pin: int):
     setup()
-    GPIO.setmode(pin, GPIO.OUT)
+    GPIO.setup(pin, GPIO.OUT)
 
 def setup_input_pin(pin: int):
     setup()
-    GPIO.setmode(pin, GPIO.IN)
+    GPIO.setup(pin, GPIO.IN)
 
 def set_pin_high(pin: int):
     setup_output_pin(pin)
