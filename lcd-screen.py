@@ -62,13 +62,9 @@ def goto_inspecting_screen():
 
     # #TODO - Camera stuff
     with futures.ThreadPoolExecutor(max_workers=1) as executor:
-        future_obj = executor.submit(camera.run_inference(
-            labels= labels,
-            interpreter= interpreter,
-            size = size 
-        ))
-    future_obj.add_done_callback(inference_cb)
-
+        future_obj = executor.submit(camera.run_inference, interpreter, size, labels)
+    # future_obj.add_done_callback(inference_cb)
+    print(future_obj.result())
 def inference_cb(future):
     future.result()
     # print(future.done())

@@ -50,8 +50,10 @@ get_signal_done_cleaning = get_pin_level(constants.DONE_CLEANING_PIN)
 move_count = 0
 
 def goto_next_grid() -> bool:
+    global move_count
     if move_count < constants.MAX_MOVES:
         move_stepper_motor(constants.MOTOR2, constants.GRID_SIDE_LENGTH)
+        move_count = move_count + 1
         return True
     return False
 
