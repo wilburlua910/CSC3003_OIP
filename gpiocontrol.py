@@ -46,8 +46,17 @@ def cleanup_signal_pins():
 
 get_signal_done_cleaning = get_pin_level(constants.DONE_CLEANING_PIN)
 
-def goto_next_grid():
-    move_stepper_motor(constants.MOTOR2, constants.GRID_SIDE_LENGTH)
+move_count = 0
 
+def goto_next_grid() -> bool:
+    if move_count < constants.MAX_MOVES:
+        move_stepper_motor(constants.MOTOR2, constants.GRID_SIDE_LENGTH)
+        return True
+    return False
+
+def return_to_rest():
+    global move_count
+    move_count = 0
+    pass
 
 # TODO: how to make the stop signal and the listening bit?
