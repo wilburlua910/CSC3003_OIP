@@ -29,8 +29,7 @@ def get_pin_level(pin: int) -> int:
     return GPIO.input(pin)
 
 def move_stepper_motor(motor: list, distance_cm: float):
-    pass
-    #RpiMotorLib.BYJMotor().motor_run(motor, (distance_cm * constants.HALF_STEPS_TO_1CM))
+    RpiMotorLib.BYJMotor("name", "28BYJ").motor_run(motor, steps=(distance_cm * constants.HALF_STEPS_TO_1CM))
 
 # Higher level control
 turn_on_ringlight = set_pin_high(constants.LEDPIN)
@@ -52,7 +51,7 @@ move_count = 0
 def goto_next_grid() -> bool:
     global move_count
     if move_count < constants.MAX_MOVES:
-        move_stepper_motor(constants.MOTOR2, constants.GRID_SIDE_LENGTH)
+        move_stepper_motor(constants.MOTOR1, constants.GRID_SIDE_LENGTH)
         move_count = move_count + 1
         return True
     return False
