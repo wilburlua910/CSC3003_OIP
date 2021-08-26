@@ -94,11 +94,10 @@ app.text_color = "black"
 app.set_full_screen()
 
 
-def inference_cb():
+def inference_cb(future_obj):
 
-    
-    pass
-    #
+    #Print 1 or 2
+    print("State of cleaning: " + future_obj.results) 
 
 with futures.ThreadPoolExecutor() as executor:
 

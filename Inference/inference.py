@@ -14,6 +14,9 @@ import io
 import picamera 
 from PIL import Image
 
+#Regex 
+import re
+
 #For the states
 from enum import Enum
 
@@ -81,30 +84,37 @@ class Camera:
 
     def run_inference(self, interpreter, size, labels):
 
-        image_ = Camera.take_photo(size)
-        classify.set_input(interpreter= interpreter, data=image_)
+        while (gpiocontrol.goto_next_grid()):
+            image_ = Camera.take_photo(size)
+            classify.set_input(interpreter= interpreter, data=image_)
 
-        #Inferencing
-        print('----- INFERENCE TIME------')
-        print('Note: The first inference on Edge TPU is slow because it includes',
-        'loading the model into Edge TPU memory.')
+            #Inferencing
+            print('----- INFERENCE TIME------')
 
-        no_of_inferences = 5
-        for _ in range(no_of_inferences):
-            start = time.perf_counter()
-            interpreter.invoke()
-            infererence_time = time.perf_counter() - start
+            no_of_inferences = 5
+            for _ in range(no_of_inferences):
+                start = time.perf_counter()
+                interpreter.invoke()
+                infererence_time = time.perf_counter() - start
 
-            #args top k - 1
-            #args threshold 
-            classes = classify.get_output(interpreter, 1, 0.0)
-            print('%.1fms' % (infererence_time * 1000))
-            
-            print('-------RESULTS--------')
-            for klass in classes:
-                output = labels.get(klass.id, klass.id), klass.score
-                print('%s: %.5f' % (labels.get(klass.id, klass.id), klass.score))
-                return output        
+                #args top k - 1
+                #args threshold 
+                classes = classify.get_output(interpreter, 1, 0.0)
+                print('%.1fms' % (infererence_time * 1000))
+                
+                print('-------RESULTS--------')
+                for klass in classes:
+                    output = labels.get(klass.id, klass.id), klass.score
+                    print('%s: %.5f' % (labels.get(klass.id, klass.id), klass.score))
+
+                    if re.search("dirty_wet", output[0]):
+                        #Change the state
+                    
+                        gpiocontrol.return_to_rest()
+                        return State.STATE_UNCLEAN
+
+        gpiocontrol.return_to_rest()
+        return State.STATE_ALL_CLEAN
 
     def load_labels(self, path):
         with open(path, 'r', encoding= 'utf-8') as f:
