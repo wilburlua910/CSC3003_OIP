@@ -44,7 +44,7 @@ def cleanup_signal_pins():
     set_pin_low(constants.START_CLEANING_PIN)
     set_pin_low(constants.STOP_PIN)
 
-get_signal_done_cleaning = get_pin_level(constants.DONE_CLEANING_PIN)
+get_signal_done_cleaning = get_pin_level(constants.DONE_CLEANING_PIN) == GPIO.HIGH
 
 move_count = 0
 
