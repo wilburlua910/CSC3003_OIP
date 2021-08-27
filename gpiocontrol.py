@@ -56,8 +56,14 @@ def cleanup_signal_pins():
     set_pin_low(constants.START_CLEANING_PIN)
     set_pin_low(constants.STOP_PIN)
 
-get_signal_done_cleaning = get_pin_level(constants.DONE_CLEANING_PIN) == GPIO.HIGH
+def init_pins_low():
+    set_pin_low(constants.START_CLEANING_PIN)
+    set_pin_low(constants.DONE_CLEANING_PIN)
+    set_pin_low(constants.STOP_PIN)
 
+def get_signal_done_cleaning():
+    return get_pin_level(constants.DONE_CLEANING_PIN) == GPIO.HIGH
+    
 move_count = 0
 
 def goto_next_grid() -> bool:

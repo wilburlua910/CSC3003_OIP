@@ -18,14 +18,17 @@ def initialize_camera():
     time.sleep(1)
     return cam
 
+# Set pins to 0v first
+gpiocontrol.init_pins_low()
 # Camera
 camera = initialize_camera()
 size, interpreter, labels = camera.size, camera.interpreter, camera.labels
 
-
-
 # Screen stuff
 def goto_cleaning_screen():
+
+    #Pull pins high
+    gpiocontrol.signal_start_cleaning()
     start_screen_box.hide()
     cleaning_screen_box.show()
 
@@ -77,10 +80,7 @@ def goto_complete_bad_screen():
 
 # GUI polling state listeners
 def cleaning_done():
-    if cleaning_screen_box.visible:
-        time.sleep(3)
-    # TODO: write proper codes 
-    #  and gpiocontrol.get_signal_done_cleaning():
+    if cleaning_screen_box.visible and not gpiocontrol.get_signal_done_cleaning():
         goto_inspecting_screen()
 
 inference_done: inference.State = inference.State.STATE_IN_PROGRESS
