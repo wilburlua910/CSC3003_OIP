@@ -31,6 +31,9 @@ def get_pin_level(pin: int) -> int:
 def move_stepper_motor(motor: list, distance_cm: float):
     RpiMotorLib.BYJMotor("name", "28BYJ").motor_run(motor, steps=(distance_cm * constants.HALF_STEPS_TO_1CM))
 
+def reverse_stepper_motor(motor: list, distance_cm: float):
+    RpiMotorLib.BYJMotor("name", "28BYJ").motor_run(motor, steps=(distance_cm * constants.HALF_STEPS_TO_1CM), ccwise=True)
+
 # Higher level control
 
 def turn_on_ringlight():
@@ -67,7 +70,7 @@ def goto_next_grid() -> bool:
 
 def return_to_rest():
     global move_count
+    reverse_stepper_motor(constants.MOTOR1, constants.GRID_SIDE_LENGTH * move_count)
     move_count = 0
-    pass
 
 # TODO: how to make the stop signal and the listening bit?

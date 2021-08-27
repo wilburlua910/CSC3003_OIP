@@ -112,14 +112,14 @@ class Camera:
                     if re.search("dirty_wet", output[0]):
                         #Change the state
 
-                        gpiocontrol.turn_off_ringlight()
+                        gpiocontrol.turn_off_ringlight
                         gpiocontrol.return_to_rest()
                         
-                        return "UNCLEAN"
+                        return State.STATE_UNCLEAN
 
         gpiocontrol.turn_off_ringlight()
         gpiocontrol.return_to_rest()
-        return "ALL CLEAN"
+        return State.STATE_ALL_CLEAN
 
     def load_labels(self, path):
         with open(path, 'r', encoding= 'utf-8') as f:
