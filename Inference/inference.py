@@ -84,6 +84,8 @@ class Camera:
 
     def run_inference(self, interpreter, size, labels):
 
+        gpiocontrol.turn_on_ringlight()
+
         while (gpiocontrol.goto_next_grid()):
             image_ = Camera.take_photo(size)
             classify.set_input(interpreter= interpreter, data=image_)
@@ -109,10 +111,13 @@ class Camera:
 
                     if re.search("dirty_wet", output[0]):
                         #Change the state
-                    
+
+                        gpiocontrol.turn_off_ringlight()
                         gpiocontrol.return_to_rest()
+                        
                         return "UNCLEAN"
 
+        gpiocontrol.turn_off_ringlight()
         gpiocontrol.return_to_rest()
         return "ALL CLEAN"
 
