@@ -110,7 +110,7 @@ app.set_full_screen()
 start_screen_box = Box(app, visible=True, width="fill", height="fill")
 ssb_titletext = Text(start_screen_box, text="SyClone", color="white")
 ssb_start_button = PushButton(start_screen_box, text="Start", command=goto_cleaning_screen, width="fill", height="fill")
-ssb_start_button.bg = constants.POSTIVE_GREEN
+ssb_start_button.bg = constants.POSITIVE_GREEN
 
 #TODO: gotocleaningscreen => pull pin to high to indicate standy > start 
 
@@ -132,7 +132,7 @@ inspecting_screen_box.repeat(1000, inspecting_done)
 confirm_stop_screen_box = Box(app, visible=False, width="fill", height="fill")
 cssb_title_text = Text(confirm_stop_screen_box, text="Confirm stop?", color="white")
 cssb_cancel_button = PushButton(confirm_stop_screen_box, text="Continue", command=goback, width="fill", height="fill")
-cssb_cancel_button.bg = constants.POSTIVE_GREEN
+cssb_cancel_button.bg = constants.POSITIVE_GREEN
 cssb_confirm_button = PushButton(confirm_stop_screen_box, text="Stop", command=goto_abend_start_screen, width="fill", height="fill")
 cssb_confirm_button.bg = constants.NEGATIVE_RED
 
@@ -140,7 +140,7 @@ cssb_confirm_button.bg = constants.NEGATIVE_RED
 complete_good_screen_box = Box(app, visible=False, width="fill", height="fill")
 cgsb_title_text = Text(complete_good_screen_box, text="Cleaning complete", color="white")
 cgsb_stop_button = PushButton(complete_good_screen_box, text="Confirm", command=goto_start_screen, width="fill", height="fill")
-cgsb_stop_button.bg = constants.POSTIVE_GREEN
+cgsb_stop_button.bg = constants.POSITIVE_GREEN
 
 # Complete - inspect
 complete_bad_screen_box = Box(app, visible=False, width="fill", height="fill")
