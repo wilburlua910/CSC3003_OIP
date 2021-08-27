@@ -47,7 +47,7 @@ class Camera:
     #File paths
     labels_file = "Inference/syringe_labels.txt"
     path_to_labels = os.path.join(os.getcwd(),  labels_file)
-    path_to_model = "Inference/model_edgetpu.tflite"
+    path_to_model = "Inference/model_edgetpu_97.tflite"
 
     def __init__(self):
 
@@ -111,8 +111,8 @@ class Camera:
 
                     if re.search("dirty_wet", output[0]):
                         #Change the state
-
-                        gpiocontrol.turn_off_ringlight
+                        
+                        gpiocontrol.turn_off_ringlight()
                         gpiocontrol.return_to_rest()
                         
                         return State.STATE_UNCLEAN
