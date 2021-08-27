@@ -32,13 +32,22 @@ def move_stepper_motor(motor: list, distance_cm: float):
     RpiMotorLib.BYJMotor("name", "28BYJ").motor_run(motor, steps=(distance_cm * constants.HALF_STEPS_TO_1CM))
 
 # Higher level control
-turn_on_ringlight = set_pin_high(constants.LEDPIN)
 
-turn_off_ringlight = set_pin_low(constants.LEDPIN)
+def turn_on_ringlight():
+    print('====Turning on the lights=====')
+    set_pin_high(constants.LEDPIN)
 
-signal_start_cleaning = set_pin_high(constants.START_CLEANING_PIN)
+def turn_off_ringlight():
+    print('====Turning off the lights=====')
+    set_pin_low(constants.LEDPIN)
 
-signal_stop_cleaning = set_pin_high(constants.STOP_PIN)
+def signal_start_cleaning():
+    print('====Start cleaning signal=====')
+    set_pin_high(constants.START_CLEANING_PIN)
+
+def signal_stop_cleaning():
+    print('====Stop cleaning signal=====')
+    set_pin_high(constants.STOP_PIN)
 
 def cleanup_signal_pins():
     set_pin_low(constants.START_CLEANING_PIN)
